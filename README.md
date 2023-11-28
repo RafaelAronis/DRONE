@@ -39,7 +39,7 @@ To run the program, follow these steps:
     ```
     This command will launch a GUI tool that you can use to select and annotate objects in the positive images. The tool will save the annotations in the `annotations.txt` file.
 
-3. Crate `bg.txt` file:
+3. Create `bg.txt` file:
 
     <!-- Run the following command on the terminal: -->
     ```besh
