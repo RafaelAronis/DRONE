@@ -4,7 +4,6 @@ calibrar.py
 calibration.npz
 control_manual.py
 control_manual.ipynb
-dist_objs_xy.py
 dist_objs_z.py
 efficientdet.tflite
 mediapipe_test.py
