@@ -1,11 +1,11 @@
 import cv2
 import os
-watch_cascade = cv2.CascadeClassifier('cascade/cascade4/cascade.xml')
+watch_cascade = cv2.CascadeClassifier('../rec_obj/cascade/cascade4/cascade.xml')
 
-list_img=os.listdir('imgs/positive_imgs')
+list_img = os.listdir('../rec_obj/imgs/positive_imgs')
 
 for img_name in list_img:
-    img = cv2.imread('imgs/positive_imgs/'+img_name)
+    img = cv2.imread('../rec_obj/imgs/positive_imgs/'+img_name)
     gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
     watches = watch_cascade.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=1)

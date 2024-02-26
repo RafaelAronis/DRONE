@@ -5,7 +5,7 @@ w,h = 24,24
 numPos = len(os.listdir('imgs/positive_imgs')) - len(os.listdir('imgs/img_teste'))
 numNeg = len(os.listdir('imgs/negative_imgs'))
 numStages = 6
-path = 'C:/Users/raaro/OneDrive/Documentos/CS/S6/PoleP/rec_obj/cascade/cascade3'
+path = 'C:/Users/raaro/OneDrive/Documentos/CS/S6/PoleP/rec_obj/cascade/cascade5'
 
 # Command opencv_createsamples
 createsamples = "opencv_createsamples "

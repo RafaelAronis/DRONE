@@ -2,7 +2,7 @@
 import cv2
 
 # ------- RUN --------------------------------------------------------------------------
-Cascade = cv2.CascadeClassifier("cascade/cascade4/cascade.xml") # Creates the obj detector
+Cascade = cv2.CascadeClassifier("../rec_obj/scascade/cascade4/cascade.xml") # Creates the obj detector
 video_capture = cv2.VideoCapture(0) # Camera video capture
 
 while True:
