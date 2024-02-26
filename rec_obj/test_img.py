@@ -1,16 +1,19 @@
+# ------- Import --------------------------------------------------------------------------
 import cv2
 import os
-watch_cascade = cv2.CascadeClassifier('cascade/cascade4/cascade.xml')
 
+# ------- RUN --------------------------------------------------------------------------
+watch_cascade = cv2.CascadeClassifier('cascade/cascade4/cascade.xml')
 list_img=os.listdir('imgs/positive_imgs')
 
 for img_name in list_img:
+
+    # Frame preparation
     img = cv2.imread('imgs/positive_imgs/'+img_name)
     gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
     watches = watch_cascade.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=1)
-    # print(watches)
 
+    # Draw a rectangle around the objects
     for (x, y, w, h) in watches:
         cv2.rectangle(img, (x - 4, y + h), (x + w + 5, y + h + 16), (255, 0, 0), cv2.FILLED)
         cv2.putText(img, 'Drone', (x - 4, y + h + 13), cv2.FONT_ITALIC, 0.42, (255, 255, 255), 1)
