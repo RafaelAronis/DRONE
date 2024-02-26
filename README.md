@@ -35,7 +35,7 @@ To run the program, follow these steps:
 
     <!-- Run the following command on the terminal: -->
     ```besh
-    $ python file_annotations_create.py
+    $ python create_file_annotations.py
     ```
     This command will launch a GUI tool that you can use to select and annotate objects in the positive images. The tool will save the annotations in the `annotations.txt` file.
 
@@ -43,7 +43,7 @@ To run the program, follow these steps:
 
     <!-- Run the following command on the terminal: -->
     ```besh
-    $ python file_bg_crate.py
+    $ python create_file_bg.py
     ```
     This code creates a text file named `bg.txt` with the paths to the negative images that will be used to train the object detection classifier
 
