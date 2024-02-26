@@ -1,9 +1,9 @@
 import cv2
 
 # Cria o detector de obj
-# Cascade = cv2.CascadeClassifier("cascade/cascade2/cascade.xml")
+Cascade = cv2.CascadeClassifier("cascade/cascade2/cascade.xml")
 # Cascade = cv2.CascadeClassifier("cascade/cascade1/cascade.xml")
-Cascade = cv2.CascadeClassifier("cascade/norg/haarcascade_frontalface_default.xml")
+# Cascade = cv2.CascadeClassifier("cascade/norg/haarcascade_frontalface_default.xml")
 
 # Captura de vídeo da câmera
 video_capture = cv2.VideoCapture(0)

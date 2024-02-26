@@ -1,17 +1,3 @@
-a.py
-b.py
-calibrar.py
-calibration.npz
-control_manual.py
-control_manual.ipynb
-dist_objs_z.py
-efficientdet.tflite
-mediapipe_test.py
-plot_vis.py
-test_img.py
-contrlolgpt.py
-calibration
 .vscode
 .venv
-coordenates.ipynb
 opencv
