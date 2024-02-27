@@ -5,9 +5,7 @@ from PIL import Image
 
 # ------- RUN --------------------------------------------------------------------------
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLOv5 model
-
-# video_capture = cv2.VideoCapture(0) #  Camera video capture
-video_capture = cv2.VideoCapture('data/bulletcam03.mp4') #  Camera video capture
+video_capture = cv2.VideoCapture(0) #  Camera video capture
 classes = ['Drone'] # Classes to detect
 
 while True:
