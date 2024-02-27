@@ -15,7 +15,7 @@ while True:
     img = Image.fromarray(frame[...,::-1]) # Convert the frame to a format that YOLOv5 can process
 
     # Run inference on the frame (change size = change FPS)
-    results = model(img, size=320)
+    results = model(img, size=640)
 
     # Process the results and draw bounding boxes on the frame
     for result in results.xyxy[0]:
