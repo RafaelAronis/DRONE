@@ -4,9 +4,13 @@ import torch
 from PIL import Image
 
 # ------- RUN --------------------------------------------------------------------------
+video_capture = cv2.VideoCapture("a.mp4") #  Camera video capture
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLOv5 model
-video_capture = cv2.VideoCapture(0) #  Camera video capture
-classes = ['Drone'] # Classes to detect
+
+# Check for CUDA
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    model.to(device).half()
 
 while True:
 
@@ -20,10 +24,13 @@ while True:
     # Process the results and draw bounding boxes on the frame
     for result in results.xyxy[0]:
         x1, y1, x2, y2, conf, cls = result.tolist()
-        if conf > 0.5 and classes[int(cls)] in classes:
+        if conf > 0.5:
 
             # Draw the bounding box
             cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
+
+            # Get Center
+            cx,cy = (x1+x2)/2,(y1+y2)/2
 
             # Display the confidence score above the box
             text_conf = "{:.2f}%".format(conf * 100)

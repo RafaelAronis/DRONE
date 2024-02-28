@@ -23,11 +23,18 @@ def get_chrome_screenshot():
         return None
 
 # ------- RUN -----------------------------------------------------------------------------------------------------
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLO model
 window_title  = "ChatGPT - Google Chrome" #  Window capture title
-classes = ['Drone'] # Classes to detect
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLO model
+
+# Mouse parameters
 mouse = Controller()
 follow_mouse = False
+
+# Check for CUDA
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    # model.to(device)
+    model.to(device).half()
 
 
 while True:
@@ -42,7 +49,7 @@ while True:
     # Process the results and draw bounding boxes on the frame
     for result in results.xyxy[0]:
         x1, y1, x2, y2, conf, cls = result.tolist()
-        if conf > 0.5 and classes[int(cls)] in classes:
+        if conf > 0.5:
 
             # Follow mouse
             if follow_mouse:
