@@ -1,14 +1,12 @@
 import cv2
+import dlib
 import torch
 from PIL import Image
-import dlib
-
-# Inicialização do rastreador KLT
-tracker = dlib.correlation_tracker()
 
 # ------- RUN --------------------------------------------------------------------------
 video_capture = cv2.VideoCapture(0) #  Camera video capture
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLOv5 model
+tracker = dlib.correlation_tracker() # Tracker dlib
 
 # Check for CUDA
 if torch.cuda.is_available():
@@ -16,9 +14,9 @@ if torch.cuda.is_available():
     model.to(device).half()
 
 # Control variables
+detect = True
 frame_count = 0
 reinit_interval  = 200
-detect = True
 
 while True:
 
