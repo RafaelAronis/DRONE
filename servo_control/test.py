@@ -11,7 +11,7 @@ servo = AngularServo(17, min_pulse_width=0.0005, max_pulse_width=0.0024, pin_fac
 # Loop principal
 try:
     while True:
-        angulo = int(input())
+        angulo = float(input())
         servo.angle = max(-90, min(90, angulo))
 except :
     print('Servo off')
