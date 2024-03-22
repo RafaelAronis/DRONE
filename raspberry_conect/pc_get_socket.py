@@ -32,6 +32,7 @@ while True:
 
     frame = pickle.loads(frame_data, fix_imports=True, encoding="bytes")
     frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+    print(frame.shape)
     cv2.imshow('frame',frame)
     cv2.waitKey(1)
 
