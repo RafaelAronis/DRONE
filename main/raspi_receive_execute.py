@@ -4,7 +4,7 @@
 
 # ------- Import Libraries ---------------------------------------------------------------------------------------------------
 import socket
-from utils_RSPI import*
+from utils_main.utils_RSPI import*
 
 # Create camera aime tracker
 rspi_tracker = RspiServoControl()

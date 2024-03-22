@@ -3,7 +3,7 @@ import torch
 import pickle
 import socket
 import struct
-from utils_main import*
+from utils_main.utils_PC import*
 
 # ------- Conection To Raspi ---------------------------------------------------------------------------------------------------
 
