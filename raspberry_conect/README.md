@@ -17,5 +17,5 @@ python3 zdisplay.py -m peer -e tcp/"IP_TurtleBot3":7447
 
 ### Terminal 1 PC:
 ```bash
-scp test.py drone@192.168.19.98:~/Desktop/transfer.py
+scp utils.py drone@192.168.19.98:~/Desktop/transfer.py
 ```
