@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 
 # ------- RUN --------------------------------------------------------------------------
-video_capture = cv2.VideoCapture('a.mp4') #  Camera video capture
+video_capture = cv2.VideoCapture(0) #  Camera video capture
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='models/best.pt', source='github') # Load YOLOv5 model
 
 # Check for CUDA

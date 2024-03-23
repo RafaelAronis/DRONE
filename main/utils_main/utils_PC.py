@@ -9,6 +9,7 @@ class PCProcess():
         # Object position
         self.x = None # Object center x
         self.y = None # Object center y
+        self.searching = True
 
     def create_servo(self, pin_x,pin_y, velocity):
         Device.pin_factory = MockFactory(pin_class=MockPWMPin) # Config mock pin factory
@@ -66,9 +67,7 @@ class PCProcess():
                 # Servo
                 self.x,self.y = (x1+x2)/2,(y1+y2)/2 # Get coordnates of object
                 self.adjust() # Move servo motors
-
-                # data = f"{cam_tracker.servo_x.angle}, {cam_tracker.servo_y.angle}\n".encode()
-                # client_socket.sendall(data)
+                self.searching = False # Stop seacrh for drone
 
     def track(self):
 

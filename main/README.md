@@ -5,6 +5,7 @@
 ### Terminal 1: Capturing and Sending Photos from Raspberry Pi to PC
 ```bash
 ssh drone@"IPRaspberry"
+dronedrone
 cd ./Desktop/CODE/main
 python raspi_capture_send.py
 ```
@@ -12,6 +13,7 @@ python raspi_capture_send.py
 ### Terminal 2: Receiving and Executing Commands on Raspberry Pi
 ```bash
 ssh drone@"IPRaspberry"
+dronedrone
 cd ./Desktop/CODE/main
 python raspi_receive_execute.py
 ```
