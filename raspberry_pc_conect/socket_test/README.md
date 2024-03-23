@@ -3,13 +3,13 @@
 ```bash
 ssh drone@"IPRaspberry"
 dronedrone
-cd ./Desktop/CODE
+cd ./Desktop/CODE./Desktop/CODE/raspberry_pc_conect/socket_test
 python rpi_send_socket.py
 ```
 
 ### Terminal 2:
 ```bash
-cd raspberry_conect/
+cd raspberry_pc_conect/socket_test
 python pc_get_socket.py
 ```
 -------------------------------

@@ -4,13 +4,13 @@
 ```bash
 ssh drone@"IPRaspberry"
 dronedrone
-cd ./Desktop/CODE/zenoh-test
+cd ./Desktop/CODE/raspberry_pc_conect/zenoh_test
 python zcapture.py
 ```
 
 ### Terminal 2: Receiving and Executing Commands on Raspberry Pi
 ```bash
-cd ./Desktop/CODE/zenoh-test
+cd raspberry_pc_conect/zenoh_test
 python zdisplay.py
 ```
 -------------------------------
