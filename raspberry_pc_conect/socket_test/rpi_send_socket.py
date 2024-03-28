@@ -6,7 +6,7 @@ import pickle
 
 # ------- Conection ---------------------------------------------------------------------------------------------------
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('192.168.16.159', 8485))
+client_socket.connect(('192.168.222.98', 8485))
 connection = client_socket.makefile('wb')
 
 # ------- Send Data ---------------------------------------------------------------------------------------------------

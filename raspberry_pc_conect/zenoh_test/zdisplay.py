@@ -2,13 +2,19 @@
 import cv2
 import json
 import zenoh
-import torch
 import numpy as np
 
-# ------- Zenoh ---------------------------------------------------------------------------------------------------
+# Functions -------------------------------------------------------------------------------------------------------
+cams = {}
+def frames_listener(sample):
+    npImage = np.frombuffer(bytes(sample.value.payload), dtype=np.uint8)
+    matImage = cv2.imdecode(npImage, 1)
 
+    cams[sample.key_expr] = matImage
+
+# ------- Zenoh ---------------------------------------------------------------------------------------------------
 # Parameters
-IP = '0.0.0.0'
+IP = '192.168.222.159'
 PORT = '7447'
 mode = 'peer' # Zenoh session mode ('peer' or 'client')
 connect = [f"tcp/{IP}:{PORT}"] # Zenoh endpoints to listen on
@@ -18,16 +24,7 @@ key = 'demo/zcam' # Key expression
 conf = zenoh.Config()
 conf.insert_json5(zenoh.config.MODE_KEY, json.dumps(mode))
 conf.insert_json5(zenoh.config.CONNECT_KEY, json.dumps(connect))
-
-# Callback -------------------------------------------------------------------------------------------------------
-cams = {}
-def frames_listener(sample):
-    npImage = np.frombuffer(bytes(sample.value.payload), dtype=np.uint8)
-    matImage = cv2.imdecode(npImage, 1)
-
-    cams[sample.key_expr] = matImage
-
-
+print('[INFO] Open zenoh session...')
 zenoh.init_logger()
 z = zenoh.open(conf)
 sub = z.declare_subscriber(key, frames_listener)
@@ -36,8 +33,7 @@ sub = z.declare_subscriber(key, frames_listener)
 while True:
     for cam in list(cams):
         frame = cams[cam]
-        # displaying the frame
-        cv2.imshow(str(cam), frame)
+        cv2.imshow(str(cam), frame) # displaying the frame
 
     # Wait for a keyboard event to brake
     if cv2.waitKey(1) & 0xFF == ord('q'):
