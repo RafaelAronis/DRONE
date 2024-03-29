@@ -20,4 +20,6 @@ scp drone@IP_RaspberryPi:/home/pi/arquivo.txt .
 ### Transfer folder from PC to Raspberry
 ```bash
 scp -r minha_pasta pi@raspberry_pi_ip:~
+scp -r zenoh_main/ drone@192.168.222.98:~/Desktop/CODE
+
 ```

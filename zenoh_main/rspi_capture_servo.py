@@ -2,6 +2,7 @@
 #### Run ###
 # sudo pigpiod
 
+
 # ------- Import ---------------------------------------------------------------------------------------------------
 import cv2
 import json
@@ -13,6 +14,7 @@ import argparse
 from email.policy import default
 from imutils.video import VideoStream
 from utils_main.utils_RSPI_dummy import*
+
 
 # ------- Parser ---------------------------------------------------------------------------------------------------
 parser = argparse.ArgumentParser(prog='z_raspi_capture_send.',description='video capture')
@@ -58,10 +60,12 @@ print(f'[INFO] Open zenoh session at {args.pub} as PUB...')
 zenoh.init_logger()
 z = zenoh.open(conf)
 
+
 # ------- Servo ---------------------------------------------------------------------------------------------------
 rspi_tracker = RspiServoControl()
 pin_x, pin_y = map(int, args.pins.split(','))
 rspi_tracker.create_servo(pin_x, pin_y) # Create servo on pins
+
 
 # ------- Send Data ---------------------------------------------------------------------------------------------------
 CAMERA_ID = 0
@@ -83,5 +87,6 @@ try:
 except:
     pass
 print('[INFO] Quiting ...')
+rspi_tracker.kill()
 sub.undeclare()
 z.close()

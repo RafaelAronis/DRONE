@@ -1,23 +1,16 @@
-# Capture Imgs With zenoh
+# Drone track External Processing
 
-### Terminal 1: Capturing and Sending Photos from Raspberry Pi to PC
+### Terminal 1:
 ```bash
 ssh drone@"IPRaspberry"
 dronedrone
 cd ./Desktop/CODE/zenoh_main
-python z_pc_process_send.py
+python rspi_capture_servo.py -p tcp/0.0.0.0:7447 -s tcp/IP_PC:7442
 ```
 
-### Terminal 2: Receiving and Executing Commands on Raspberry Pi
+### Terminal 2:
 ```bash
 cd ./zenoh_main
-python z_pc_process_send.py -l tcp/IPRaspberry:7447
-```
--------------------------------
-
-### Terminal 3: Receiving and Sending Commands to Raspberry Pi on PC
-```bash
-cd ./zenoh_main
-python z_pc_process_send.py -l tcp/IPRaspberry:7447
+python pc_process.py -p tcp/0.0.0.0:7442 -s tcp/IP_RSPI:7447
 ```
 -------------------------------
