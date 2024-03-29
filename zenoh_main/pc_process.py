@@ -3,7 +3,6 @@ import cv2
 import json
 import zenoh
 import torch
-import socket
 import argparse
 import numpy as np
 from utils_main.utils_PC import*
@@ -12,26 +11,22 @@ from utils_main.utils_PC import*
 parser = argparse.ArgumentParser(
     prog='z_pc_process_send',
     description='zenoh video capture example')
-parser.add_argument('-l', '--connect', type=str, default='tcp/0.0.0.0:7447',
+parser.add_argument('-s', '--sub', type=str, default='tcp/0.0.0.0:7447',
                     help='zenoh endpoints to listen on (raspi IP and port).')
-parser.add_argument('-s', '--servo_ip', type=str, default=parser.parse_args().connect.split('/')[1].split(':')[0],
+parser.add_argument('-p', '--pub', type=str, default='tcp/0.0.0.0:7441',
                     help='zenoh endpoints to listen on (raspi IP and port).')
-parser.add_argument('-p', '--port_send', type=int, default=12345,
-                    help='scket send port')
-parser.add_argument('-k', '--key', type=str, default='demo/zcam',
-                    help='key expression')
+parser.add_argument('-ks', '--key_sub', type=str, default='drone/frame',
+                    help='key sub expression')
+parser.add_argument('-kp', '--key_pub', type=str, default='drone/servo',
+                    help='key pub expression')
 parser.add_argument('-m', '--model_path', type=str, default='models/best.pt',
                     help='model used path')
-
 args = parser.parse_args()
 
-# ------- Socket Servo Conection---------------------------------------------------------------------------------------------------
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print(f'[INFO] Socket conection at {args.servo_ip}:{args.port_send}...')
-client_socket.connect((args.servo_ip, args.port_send))
-connection = client_socket.makefile('wb')
 
 # ------- Zenoh SUB Conection ---------------------------------------------------------------------------------------------------
+
+# Zenoh SUB
 cams = {}
 def frames_listener(sample):
     npImage = np.frombuffer(bytes(sample.value.payload), dtype=np.uint8)
@@ -39,11 +34,21 @@ def frames_listener(sample):
     cams[sample.key_expr] = matImage
 conf = zenoh.Config()
 conf.insert_json5(zenoh.config.MODE_KEY, json.dumps('peer'))
-conf.insert_json5(zenoh.config.CONNECT_KEY, json.dumps([args.connect]))
-print(f'[INFO] Open zenoh session at {args.connect} ...')
+conf.insert_json5(zenoh.config.CONNECT_KEY, json.dumps([args.sub]))
+print(f'[INFO] Open zenoh session at {args.sub} as SUB...')
 zenoh.init_logger()
 z = zenoh.open(conf)
-sub = z.declare_subscriber(args.key, frames_listener)
+sub = z.declare_subscriber(args.key_sub, frames_listener)
+
+# Zenoh PUB
+conf = zenoh.Config()
+conf.insert_json5(zenoh.config.MODE_KEY, json.dumps('peer'))
+conf.insert_json5(zenoh.config.LISTEN_KEY, json.dumps([args.pub]))
+print(f'[INFO] Open zenoh session at {args.pub} as PUB...')
+zenoh.init_logger()
+z = zenoh.open(conf)
+session = zenoh.open(conf)
+pub = session.declare_publisher(args.key_pub)
 
 # ------- Process Structure Bult --------------------------------------------------------------------------
 PC = PCProcess() # Create PCProcess
@@ -84,13 +89,8 @@ try:
             else: # Track drone
                 PC.track() # Track drone detected
                 frame_count += 1 # Update frame cont
-
-                # Send data
-                data_send = f"{PC.servo_x.angle}, {PC.servo_y.angle}".encode()
-                client_socket.sendall(data_send)
-
-            # Check counter
-            if frame_count == reinit_interval:
+                pub.put(f"{PC.servo_x.angle}, {PC.servo_y.angle}") # PUB object coordnates
+            if frame_count == reinit_interval: # Check counter
                 PC.searching = True # Resetart searching
                 frame_count = 0 # Reset frame cont
 
