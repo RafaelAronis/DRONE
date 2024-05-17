@@ -21,6 +21,10 @@ parser.add_argument('-kp', '--key_pub', type=str, default='drone/servo',
                     help='key pub expression')
 parser.add_argument('-m', '--model_path', type=str, default='models/best.pt',
                     help='model used path')
+parser.add_argument('-c', '--min_conf', type=float, default=0.5,
+                    help='minimum confidence')
+parser.add_argument('-t', '--tracking', type=bool, default=False,
+                    help='track')
 args = parser.parse_args()
 
 
@@ -78,21 +82,25 @@ print(f'[INFO] All done ...')
 try:
     while True:
         for cam in list(cams):
-            frame = cams[cam]
 
             # Process frame
+            frame = cams[cam]
             PC.process_frame(frame)
 
             # Run model
             if PC.searching: # Detacting drone
-                PC.detect() # Try to detect drone
+                PC.detect(args.min_conf) # Try to detect drone
+                pub.put(f"{PC.servo_x.angle}, {PC.servo_y.angle}, {PC.direct}") # PUB object coordnates
+                PC.direct = 0.0
             else: # Track drone
                 PC.track() # Track drone detected
                 frame_count += 1 # Update frame cont
-                pub.put(f"{PC.servo_x.angle}, {PC.servo_y.angle}") # PUB object coordnates
+                pub.put(f"{-PC.servo_x.angle}, {-PC.servo_y.angle}") # PUB object coordnates
             if frame_count == reinit_interval: # Check counter
                 PC.searching = True # Resetart searching
                 frame_count = 0 # Reset frame cont
+            if not args.tracking:
+                PC.searching = True
 
             # displaying the frame
             cv2.imshow(str(cam), frame)
