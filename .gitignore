@@ -1,3 +1,5 @@
 .vscode
 .venv
 opencv
+zenoh_main/models/drone5x.pt
+zenoh_main/utils_main/sort

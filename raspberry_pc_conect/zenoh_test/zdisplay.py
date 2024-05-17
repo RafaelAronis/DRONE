@@ -14,7 +14,7 @@ def frames_listener(sample):
 
 # ------- Zenoh ---------------------------------------------------------------------------------------------------
 # Parameters
-IP = '192.168.222.159'
+IP = '192.168.107.98'
 PORT = '7447'
 mode = 'peer' # Zenoh session mode ('peer' or 'client')
 connect = [f"tcp/{IP}:{PORT}"] # Zenoh endpoints to listen on
