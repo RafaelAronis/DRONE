@@ -9,6 +9,7 @@ class PCProcess():
         # Object position
         self.x = None # Object center x
         self.y = None # Object center y
+        self.direct = 0
         self.searching = True
 
     def create_servo(self, pin_x,pin_y, velocity):
@@ -39,6 +40,14 @@ class PCProcess():
         self.servo_x.angle = max(-90,min(90,nx))
         self.servo_y.angle = max(-90,min(90,ny))
 
+        # Direct pas a pas:
+        if diff_x > 0:
+            self.direct = 1.0
+        elif diff_x < 0.0:
+            self.direct = -1.0
+        else:
+            self.direct = 0.0
+
     def process_frame(self,frame):
 
         # Get window size
@@ -50,13 +59,13 @@ class PCProcess():
         self.img = Image.fromarray(frame[...,::-1])
         self.frame = frame
 
-    def detect(self):
+    def detect(self,min_conf):
         results = self.model(self.img, size=640) # Run inference on the frame (change size = change FPS)
 
         # Process the results and draw bounding boxes on the frame
         for result in results.xyxy[0]:
             x1, y1, x2, y2, conf, cls = result.tolist()
-            if conf > 0.5: # Detection
+            if conf > min_conf: # Detection
                 x1, y1, x2, y2 = map(int, result[:4]) # Convert to intergers
                 bbox = (x1, y1, x2, y2) # Creat boc
                 self.tracker.start_track(self.frame, dlib.rectangle(*bbox)) # Create checker
@@ -68,6 +77,7 @@ class PCProcess():
                 self.x,self.y = (x1+x2)/2,(y1+y2)/2 # Get coordnates of object
                 self.adjust() # Move servo motors
                 self.searching = False # Stop seacrh for drone
+
 
     def track(self):
 
