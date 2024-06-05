@@ -1,5 +1,9 @@
-# Data base
-https://drive.google.com/file/d/1YuRWsIc6-GhX2yucxL_HsSplGPPK2mX1/view
+# Reference
+## Data base
+> https://drive.google.com/file/d/1YuRWsIc6-GhX2yucxL_HsSplGPPK2mX1/view
+## Inspiration 
+>https://github.com/emineeminesahin/DroneDetectionWithYOLO/tree/main/yolov5sdetectionresult/exp2
+
 # Drone track External Processing
 
 ### Terminal 1:
